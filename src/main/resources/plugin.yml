@@ -1,0 +1,11 @@
+name: Trails
+version: '${project.version}'
+main: wihy.trails.Trails
+api-version: 1.17
+authors: [ Wihy ]
+description: Create custom trails for your server!!!!!!!!!!!!!!#
+commands:
+  trails:
+    usage: /trails (RAWR)
+  startthetrail:
+    description: yus
