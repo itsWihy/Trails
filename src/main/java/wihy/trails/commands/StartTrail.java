@@ -9,19 +9,24 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
+import wihy.trails.Trails;
 
-import static wihy.trails.Trails.getPlugin;
 import static wihy.trails.Utils.c;
 import static wihy.trails.Utils.generateParticle;
 
 public class StartTrail implements CommandExecutor {
+    Trails plugin;
+
+    public StartTrail(Trails plugin) {
+        this.plugin = plugin;
+    }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         Player player = (Player) sender;
         if(command.getName().equalsIgnoreCase("startthetrail")) {
             if(player.hasPermission("progamer")) {
                 if(!(player.hasMetadata("trails"))) {
-                    player.setMetadata("trails", new FixedMetadataValue(getPlugin(), "true"));
+                    player.setMetadata("trails", new FixedMetadataValue(plugin, "true"));
                     player.sendMessage(c("&b&lTRAILS&a Trails are now enabled."));
 
                     float height;
@@ -98,9 +103,9 @@ public class StartTrail implements CommandExecutor {
                             }
 
                         }
-                    }.runTaskTimer(getPlugin(), 1L, 3L);
+                    }.runTaskTimer(plugin, 1L, 3L);
                 } else {
-                    player.removeMetadata("trails", getPlugin());
+                    player.removeMetadata("trails", plugin);
                     player.sendMessage(c("&b&lTRAILS&c Trails are now disabled."));
                 }
             }

@@ -6,13 +6,20 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import wihy.trails.Trails;
 
 import java.io.File;
 
-import static wihy.trails.Trails.getPlugin;
-import static wihy.trails.Utils.*;
+import static wihy.trails.Utils.c;
+import static wihy.trails.Utils.getLoreByLine;
 
 public class SelectTrailClick implements Listener {
+    Trails plugin;
+
+    public SelectTrailClick(Trails plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
@@ -44,7 +51,7 @@ public class SelectTrailClick implements Listener {
             }
             if(event.getRawSlot() == 53) {
                 int i = 0;
-                for(File file : getPlugin().getDataFolder().listFiles()) {
+                for(File file : plugin.getDataFolder().listFiles()) {
                     if(!(file.getName().equalsIgnoreCase("config.yml"))) {
                         file.delete();
                         i++;

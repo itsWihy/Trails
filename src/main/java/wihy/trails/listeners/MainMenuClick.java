@@ -8,22 +8,28 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import wihy.trails.Trails;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static wihy.trails.Trails.getPlugin;
 import static wihy.trails.Utils.*;
 
 public class MainMenuClick implements Listener {
+    Trails plugin;
+
+    public MainMenuClick(Trails plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) throws IOException {
         if(event.getWhoClicked().getOpenInventory().getTitle().equalsIgnoreCase("Trails")) {
             event.setCancelled(true);
             if(event.getSlot() == 21) {
-                event.getWhoClicked().setMetadata("Editor", new FixedMetadataValue(getPlugin(), true));
+                event.getWhoClicked().setMetadata("Editor", new FixedMetadataValue(plugin, true));
                 event.getWhoClicked().closeInventory();
                 event.getWhoClicked().sendMessage(c("&b&lTRAILS&A Enter a name for the trail."));
             }
@@ -45,7 +51,7 @@ public class MainMenuClick implements Listener {
                 String strippedName;
                 BufferedReader bufferedReader;
 
-                for(File file : getPlugin().getDataFolder().listFiles()) {
+                for(File file : plugin.getDataFolder().listFiles()) {
                     if(!(file.getName().equalsIgnoreCase("config.yml"))) {
                         bufferedReader = new BufferedReader(new FileReader(file));
 
@@ -78,9 +84,9 @@ public class MainMenuClick implements Listener {
         String name = event.getMessage();
         if(player.hasMetadata("Editor")) {
             event.setCancelled(true);
-            player.removeMetadata("Editor", getPlugin());
+            player.removeMetadata("Editor", plugin);
 
-            File file = new File(getPlugin().getDataFolder(), name+".yml");
+            File file = new File(plugin.getDataFolder(), name+".yml");
 
             int extra = 0;
             Integer[] ints = {0,1, 2, 3, 4, 5, 6, 7, 8, 45, 46, 47, 48, 49, 50, 51, 52, 53};
